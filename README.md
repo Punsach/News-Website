@@ -1,6 +1,6 @@
 # README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
+Link to database:
+http://ec2-52-14-72-236.us-east-2.compute.amazonaws.com/phpmyadmin
 
 ### What is this repository for? ###
 
