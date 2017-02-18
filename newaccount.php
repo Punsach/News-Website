@@ -42,7 +42,7 @@
 		$password = $_POST['pass'];
 		$hashedpassword = password_hash($password,PASSWORD_DEFAULT);
 
-		$stmt = $mysqli->prepare("insert into users (username, $hashedpassword) values (?, ?)");
+		$stmt = $mysqli->prepare("insert into users ($username, $hashedpassword) values (?, ?)");
 		if(!$stmt){
 			printf("Query Prep Failed: %s\n", $mysqli->error);
 			exit;
