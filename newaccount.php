@@ -32,12 +32,7 @@
 		<p>
 			<input type="submit" name ="newacc" id = "newacc" value="Create Account" />
 		</p>
-		<p>
-			<input type="submit" name ="guest" id = "guest" value = "Continue as Guest" />
-		</p>
 	</form>
-	<?php
-	?>
 	<?php
 	require 'database.php';
 
