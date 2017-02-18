@@ -34,14 +34,14 @@
             <p>
                 <input type="submit" name ="loginButton" id = "loginButton" value="Login" />
             </p>
+            <p>
+            <input type="submit" name ="guest" id = "guest" value = "Continue as Guest"/>
+            </p>
         </form>
 
         <form method="post" action = "newaccount.php"> 
         <p>
             <input type="submit" name ="newacc" id = "newacc" value="Make Account" />
-            </p>
-            <p>
-            <input type="submit" name ="guest" id = "guest" value = "Continue as Guest"/>
             </p>
         </form>
 
