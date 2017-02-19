@@ -31,7 +31,7 @@
 		    <?php
 		    require 'database.php';
 		$story_id = $_GET[story_id];
-		$stmt = $mysqli->prepare("select story_link, username, title from stories where story_id=$story_id");
+		$stmt = $mysqli->prepare("select story_link, stories.username, title, comments.content, comments.username from stories join comments on (comments.story_id=stories.story_id)");
 		if(!$stmt)
 		{
 			printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -40,16 +40,22 @@
 		 
 		$stmt->execute();
 		 
-		$stmt->bind_result($story_link, $username, $title);
+		$stmt->bind_result($story_link, $story_username, $title, $content, $comment_username);
 		 
 		echo "<ul>\n";
+		echo "<a href='$story_link'>$title</a> ";
+		echo "Posted by " . $story_username;
+
 		while($stmt->fetch()){
 			// printf("\t<li>%s %s</li>\n",
 			// 	htmlspecialchars($first),
 			// 	htmlspecialchars($last)
 			// );
 			echo "<a href='$story_link'>$title</a> ";
-			echo "Posted by " . $username;
+			echo "Posted by " . $story_username;
+			echo "Comment from " . $comment_username ."<br>";
+			echo $content;
+
 		}
 		echo "</ul>\n";
 		 
