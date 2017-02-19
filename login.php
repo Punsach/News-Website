@@ -45,8 +45,7 @@
             </p>
         </form>
 
-        <?php
-// This is a *good* example of how you can implement password-based user authentication in your web application. 
+        <?php 
 
         require 'database.php';
         if(isset($_POST['guest']))
@@ -79,17 +78,14 @@
 
             $pwd_guess = $_POST['pass'];
             
-
             if( password_verify($pwd_guess, $pwd_hash))
-            {
-                echo "Hello bitchhhh";
+            {        
                 $_SESSION['user_id'] = $username;
                 $_SESSION['guest'] = false; 
                 header("Location: guest.php");
             } 
             else
-            {
-               
+            {   
                 header("Location: login.php");
                 
             }
