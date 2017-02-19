@@ -94,7 +94,7 @@
 				?>
 			<form method="POST">
 	                        <p>
-	                            <label for="comment">Enter your title:</label>
+	                            <label for="comment">Comment:</label>
 	                            <input type="text" name="comment" id="comment" />
 	                        </p>
 	                        <p>
@@ -121,8 +121,15 @@
 	                    $stmt->execute();
 
 	                    $stmt->close();
+	                    header("Refresh: 0");
 	                }
 	            }
 	                    ?>
+
+	                     <form method="POST" action = "guest.php">
+                        <p>
+                            <input type="submit" name ="returnToStory" id = "returnToStory" value="Return to Home Page" />
+                        </p>
+                    </form>
 
 			</div></body></html>
