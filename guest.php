@@ -60,6 +60,9 @@
 			
 			echo "<a href='$story_link'>$title</a> ";
 			echo "Posted by " . $username . "<br>";
+			if($username = $_SESSION['user_id']){
+				echo "YOURS";
+			}
 			echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";
 
 		}
