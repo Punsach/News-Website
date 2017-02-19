@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+		<!DOCTYPE html>
 		<html>
 		    <head>
 		        <meta charset="utf-8"/>
@@ -31,7 +31,7 @@
 		    <?php
 		    require 'database.php';
 		 
-		$stmt = $mysqli->prepare("select story_id, username, story_link, title from stories order by story_id");
+		$stmt = $mysqli->prepare("select story_link, username, story_id title from stories order by story_id");
 		if(!$stmt)
 		{
 			printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -40,20 +40,23 @@
 		 
 		$stmt->execute();
 		 
-		$stmt->bind_result($story_link, $username, $title);
+		$stmt->bind_result($story_link, $user_id, $title, $story_id);
 		 
 		echo "<ul>\n";
-		while($stmt->fetch()){
+		while($stmt->fetch())
+		{
+			
 			// printf("\t<li>%s %s</li>\n",
 			// 	htmlspecialchars($first),
 			// 	htmlspecialchars($last)
 			// );
-			$story = "http://" . $story_link;
-			echo "<a href='$story'>$title</a> ";
-			echo "Posted by " . $username;
+			echo "<a href='$story_link'>$title</a> ";
+			echo "Posted by " . $user_id;
+			echo echo "<a href='comments.php?story=$story_id'>Comments</a> ";
 		}
 		echo "</ul>\n";
 		 
 		$stmt->close();
+		$stmtCom->close();
 
 		?>

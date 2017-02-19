@@ -78,7 +78,8 @@
     // Login succeeded!
                 $_SESSION['user_id'] = $user_id;
     // Redirect to your target page
-                header("Location: userNews.php");
+               //header("Location: userNews.php");
+
             } else{
     // Login failed; redirect back to the login screen
             }
