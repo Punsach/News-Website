@@ -31,7 +31,7 @@
 		    <?php
 		    require 'database.php';
 		$story_id = $_GET[story_id];
-		$stmt = $mysqli->prepare("select story_link, stories.username, title, comments.content, comments.username from stories join comments on (comments.story_id=stories.story_id)");
+		$stmt = $mysqli->prepare("select story_link, stories.username, title from stories where story_id=$story_id");
 		if(!$stmt)
 		{
 			printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -40,11 +40,10 @@
 		 
 		$stmt->execute();
 		 
-		$stmt->bind_result($story_link, $story_username, $title, $content, $comment_username);
+		$stmt->bind_result($story_link, $story_username, $title);
 		 
 		echo "<ul>\n";
-		echo "<a href='$story_link'>$title</a> ";
-		echo "Posted by " . $story_username;
+		
 
 		while($stmt->fetch()){
 			// printf("\t<li>%s %s</li>\n",
@@ -52,13 +51,41 @@
 			// 	htmlspecialchars($last)
 			// );
 			echo "<a href='$story_link'>$title</a> ";
-			echo "Posted by " . $story_username;
-			echo "Comment from " . $comment_username ."<br>";
-			echo $content;
+			echo "Posted by " . $story_username . "<br>";
+			
 
 		}
 		echo "</ul>\n";
 		 
 		$stmt->close();
 
+
+
+		$stmt = $mysqli->prepare("select comments.content, comments.username from comments where comments.story_id=$story_id");
+		if(!$stmt)
+		{
+			printf("Query Prep Failed: %s\n", $mysqli->error);
+			exit;
+		}
+		 
+		$stmt->execute();
+		 
+		$stmt->bind_result( $content, $comment_username);
+		 
+		echo "<ul>\n";
+		
+
+		while($stmt->fetch()){
+			// printf("\t<li>%s %s</li>\n",
+			// 	htmlspecialchars($first),
+			// 	htmlspecialchars($last)
+			// );
+			
+			echo "Comment from " . $comment_username ."<br>" . $content ."<br>";
+			
+
+		}
+		echo "</ul>\n";
+		 
+		$stmt->close();
 		?>
