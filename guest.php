@@ -51,7 +51,7 @@
 			// 	htmlspecialchars($last)
 			// );
 			echo "<a href='$story_link'>$title</a> ";
-			echo "Posted by " . $user_id;
+			echo "Posted by " . $username;
 			echo echo "<a href='comments.php?story=$story_id'>Comments</a> ";
 		}
 		echo "</ul>\n";
