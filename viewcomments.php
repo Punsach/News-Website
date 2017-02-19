@@ -61,7 +61,7 @@
 			session_start();
 
 
-			$stmt = $mysqli->prepare("select comments.content, comments.username from comments where comments.story_id=$story_id");
+			$stmt = $mysqli->prepare("select comments.content, comments.username, comments.comment_id from comments where comments.story_id=$story_id");
 			if(!$stmt)
 			{
 				printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -70,7 +70,7 @@
 			 
 			$stmt->execute();
 			 
-			$stmt->bind_result( $content, $comment_username);
+			$stmt->bind_result( $content, $comment_username, $comment_id);
 			 
 			echo "<ul>\n";
 			
@@ -85,7 +85,13 @@
 				if ($comment_username==$_SESSION['user_id']){
 					//if you're the author, give option to edit comment
 
-					echo "YOURS" . "<br>";
+					?>
+					<form method="POST" action = "editComments.php?comment_id='$comment_id'">
+                        <p>
+                            <input type="submit" name ="editComment" id = "editComment" value="Edit Your Comment" />
+                        </p>
+                    </form>
+                    <?php
 				}
 
 			}
