@@ -60,3 +60,4 @@
 		$stmtCom->close();
 
 		?>
+		</div></body></html>
