@@ -28,7 +28,7 @@
                 <input type="text" name="user" id="user" />
             </p>
             <p> 
-                <label for="password">Enter your password:</label>
+                <label for="pass">Enter your password:</label>
                 <input type="password" name="pass" id="pass"/>
             </p>
             <p>
@@ -46,7 +46,7 @@
         </form>
 
         <?php
-// This is a *good* example of how you can implement password-based user authentication in your web application.
+// This is a *good* example of how you can implement password-based user authentication in your web application. 
 
         require 'database.php';
         if(isset($_POST['guest']))
@@ -58,32 +58,40 @@
 
         if(isset($_POST['loginButton']))
         {
+
             session_start();
             session_unset();
+            $user = "";
 // Use a prepared statement
-            $stmt = $mysqli->prepare("SELECT COUNT(*), id, crypted_password FROM users WHERE username=?");
+
+            $stmt = $mysqli->prepare("SELECT COUNT(*), username, password FROM users WHERE username=?");
 
 // Bind the parameter
-            $stmt->bind_param('s', $user);
             $user = $_POST['user'];
+            
+            $stmt->bind_param('s', $user);
+            echo "WE DID SOMETHING";
             $stmt->execute();
 
 // Bind the results
-            $stmt->bind_result($cnt, $user_id, $pwd_hash);
+            $stmt->bind_result($cnt, $username, $pwd_hash);
             $stmt->fetch();
 
             $pwd_guess = $_POST['pass'];
+            
 
-            if($cnt == 1 && password_verify($pwd_guess, $pwd_hash))
+            if( password_verify($pwd_guess, $pwd_hash))
             {
                 echo "Hello bitchhhh";
-                $_SESSION['user_id'] = $user_id;
+                $_SESSION['user_id'] = $username;
                 $_SESSION['guest'] = false; 
                 header("Location: guest.php");
             } 
             else
             {
+               
                 header("Location: login.php");
+                
             }
         }
         ?>
