@@ -89,6 +89,9 @@
 			 
 			$stmt->close();
 			?>
+			<?php
+			if($_SESSION['guest'] !== true){
+				?>
 			<form method="POST">
 	                        <p>
 	                            <label for="comment">Enter your title:</label>
@@ -119,6 +122,7 @@
 
 	                    $stmt->close();
 	                }
+	            }
 	                    ?>
 
 			</div></body></html>
