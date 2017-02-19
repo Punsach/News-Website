@@ -2,7 +2,7 @@
 		<html>
 		    <head>
 		        <meta charset="utf-8"/>
-		        <title>View Articles</title>
+		        <title>View Comments</title>
 		        <style type="text/css">
 		            h1
 		            {
@@ -27,11 +27,11 @@
 		    </head>
 		    
 		    <body><div id = "main">
-		    <h1>News Site</h1>
+		    <h1>Comments</h1>
 		    <?php
 		    require 'database.php';
-		 
-		$stmt = $mysqli->prepare("select story_id, story_link, username, title from stories order by story_id");
+		$story_id = $_GET[story_id];
+		$stmt = $mysqli->prepare("select story_link, username, title from stories where story_id=$story_id");
 		if(!$stmt)
 		{
 			printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -40,7 +40,7 @@
 		 
 		$stmt->execute();
 		 
-		$stmt->bind_result($story_id, $story_link, $username, $title);
+		$stmt->bind_result($story_link, $username, $title);
 		 
 		echo "<ul>\n";
 		while($stmt->fetch()){
@@ -48,11 +48,8 @@
 			// 	htmlspecialchars($first),
 			// 	htmlspecialchars($last)
 			// );
-			
 			echo "<a href='$story_link'>$title</a> ";
-			echo "Posted by " . $username . "<br>";
-			echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";
-
+			echo "Posted by " . $username;
 		}
 		echo "</ul>\n";
 		 
