@@ -48,7 +48,6 @@
 			?>
 			<form method="POST" action = "editStory.php">
 			<p>
-                <label for="user">Enter your username:</label>
                 <input type="submit" name="submitStory" id="submitStory" />
             </p>
 			<?php
