@@ -56,7 +56,8 @@
         }
 
 
-        if(isset($_POST['loginButton'])){
+        if(isset($_POST['loginButton']))
+        {
             session_start();
             session_unset();
 // Use a prepared statement
@@ -72,17 +73,17 @@
             $stmt->fetch();
 
             $pwd_guess = $_POST['pass'];
-// Compare the submitted password to the actual password hash
-// In PHP < 5.5, use the insecure: if( $cnt == 1 && crypt($pwd_guess, $pwd_hash)==$pwd_hash){
 
-            if($cnt == 1 && password_verify($pwd_guess, $pwd_hash)){
-    // Login succeeded!
+            if($cnt == 1 && password_verify($pwd_guess, $pwd_hash))
+            {
+                echo "Hello bitchhhh";
                 $_SESSION['user_id'] = $user_id;
-    // Redirect to your target page
-               header("Location: guest.php");
-
-            } else{
-    // Login failed; redirect back to the login screen
+                $_SESSION['guest'] = false; 
+                header("Location: guest.php");
+            } 
+            else
+            {
+                header("Location: login.php");
             }
         }
         ?>
