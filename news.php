@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+		<!DOCTYPE html>
 		<html>
 		    <head>
 		        <meta charset="utf-8"/>
-		        <title>View Articles</title>
+		        <title>User Info Page</title>
 		        <style type="text/css">
 		            h1
 		            {
@@ -31,7 +31,7 @@
 		    <?php
 		    require 'database.php';
 		 
-		$stmt = $mysqli->prepare("select story_id, story_link, username, title from stories order by story_id");
+		$stmt = $mysqli->prepare("select story_link, username, story_id title from stories order by story_id");
 		if(!$stmt)
 		{
 			printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -40,35 +40,23 @@
 		 
 		$stmt->execute();
 		 
-		$stmt->bind_result($story_id, $story_link, $username, $title);
+		$stmt->bind_result($story_link, $user_id, $title, $story_id);
 		 
 		echo "<ul>\n";
-		if($_SESSION['guest'] !== true)
+		while($stmt->fetch())
 		{
-			?>
-			<form method="POST" action = "editStory.php">
-			<p>
-                <input type="submit" name="submitStory" id="submitStory" />
-            </p>
-			<?php
-		}
-		while($stmt->fetch()){
+			
 			// printf("\t<li>%s %s</li>\n",
 			// 	htmlspecialchars($first),
 			// 	htmlspecialchars($last)
 			// );
-			
 			echo "<a href='$story_link'>$title</a> ";
-			echo "Posted by " . $username . "<br>";
-			if($username = $_SESSION['user_id']){
-				echo "YOURS";
-			}
-			echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";
-
+			echo "Posted by " . $user_id;
+			echo echo "<a href='comments.php?story=$story_id'>Comments</a> ";
 		}
 		echo "</ul>\n";
 		 
 		$stmt->close();
+		$stmtCom->close();
 
 		?>
-		</div></body></html>

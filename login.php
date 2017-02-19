@@ -51,6 +51,7 @@
         require 'database.php';
         if(isset($_POST['guest']))
         {
+            $_SESSION['guest'] = true; 
             header("Location: guest.php");
         }
 
@@ -78,7 +79,8 @@
     // Login succeeded!
                 $_SESSION['user_id'] = $user_id;
     // Redirect to your target page
-                header("Location: userNews.php");
+               header("Location: guest.php");
+
             } else{
     // Login failed; redirect back to the login screen
             }
