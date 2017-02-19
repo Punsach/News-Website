@@ -46,7 +46,7 @@
 		if($_SESSION['guest'] !== true)
 		{
 			?>
-			<form method="POST" action = "editStory.php">
+			<form method="POST" action = "createStory.php">
 			<p>
                 <input type="submit" name="submitStory" id="submitStory" />
             </p>

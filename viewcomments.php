@@ -58,7 +58,7 @@
 			echo "</ul>\n";
 			 
 			$stmt->close();
-
+			session_start();
 
 
 			$stmt = $mysqli->prepare("select comments.content, comments.username from comments where comments.story_id=$story_id");
@@ -82,7 +82,11 @@
 				// );
 				
 				echo "Comment from " . $comment_username ."<br>" . $content ."<br>";
-				
+				if ($comment_username==$_SESSION['user_id']){
+					//if you're the author, give option to edit comment
+
+					echo "YOURS" . "<br>";
+				}
 
 			}
 			echo "</ul>\n";
