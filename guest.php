@@ -52,20 +52,20 @@
 <body><div id = "main">
 	<h1>News Site</h1>
 	<ul>
-  <li><a class="active" href='guest.php'>Home</a></li>
-  <?php
-  session_start();
-  if($_SESSION['guest'] == false)
-  {
-  	?>
-  
-  <li><a href='profile.php'>Profile</a></li>
-  <li><a href='logout.php'>Logout</a></li>
-  <li><a href='createStory.php'>Write Story</a></li>
-	</ul>
-	<?php
+		<li><a class="active" href='guest.php'>Home</a></li>
+		<?php
+		session_start();
+		if($_SESSION['guest'] == false)
+		{
+			?>
 
-}
+			<li><a href='profile.php'>Profile</a></li>
+			<li><a href='logout.php'>Logout</a></li>
+			<li><a href='createStory.php'>Write Story</a></li>
+		</ul>
+		<?php
+
+	}
 	require 'database.php';
 
 	$stmt = $mysqli->prepare("select story_id, story_link, body, username, title from stories order by story_id");
@@ -80,29 +80,32 @@
 	$stmt->bind_result($story_id, $story_link, $body, $username, $title);
 
 	echo "<ul>\n";
-		while($stmt->fetch()){
-			// printf("\t<li>%s %s</li>\n",
-			// 	htmlspecialchars($first),
-			// 	htmlspecialchars($last)
-			// );
-			
-			echo "<a href='$story_link'>$title</a> ";
-			echo "Posted by " . $username . "<br>";
-			echo $body ."<br>";
-			if($username = $_SESSION['user_id']){
-				echo "<a href='editStory.php?story_id=$story_id'>Edit Your Story    </a>" . "<br>";
-				echo "<a href='deleteStory.php?story_id=$story_id'>Delete</a>   "."<br>" ;
-			}
-			echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";
-			if($_SESSION['guest'] == false)
-  {
-  		echo "<a href='likes.php?username=$username&story_id=$story_id'>Like</a>";
-  }
+	while($stmt->fetch()){
+
+			//show story & info
+		echo "<a href='$story_link'>$title</a> ";
+		echo "Posted by " . $username . "<br>";
+		echo $body ."<br>";
+
+			//if user's story, allow edit and delete options
+		if($username === $_SESSION['user_id']){
+			echo "<a href='editStory.php?story_id=$story_id'>Edit Your Story    </a>" . "<br>";
+			echo "<a href='deleteStory.php?story_id=$story_id'>Delete</a>   "."<br>" ;
+		}
+
+			//allow anyone viewing comments
+		echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";
+		if($_SESSION['guest'] == false)
+		{
+  		//allow logged in users to like a story
+			echo "<a href='likes.php?username=$username&story_id=$story_id'>Save Story</a> <br><br>";
 
 		}
-		echo "</ul>\n";
 
-		$stmt->close();
+	}
+	echo "</ul>\n";
 
-		?>
-	</div></body></html>
+	$stmt->close();
+
+	?>
+</div></body></html>

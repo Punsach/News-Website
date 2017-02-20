@@ -4,6 +4,29 @@
 	<meta charset="utf-8"/>
 	<title>View Comments</title>
 	<style type="text/css">
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			background-color: teal;
+		}
+
+		li {
+			float: left;
+		}
+
+		li a {
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+		}
+
+		li a:hover {
+			background-color: #111;
+		}
 		h1
 		{
 			color: black;
@@ -19,7 +42,7 @@
 		}
 		div#main
 		{
-			background-color: #FFF;
+			background-color: white;
 			margin: 0;
 			padding: 10px;
 		}
@@ -28,6 +51,19 @@
 
 <body><div id = "main">
 	<h1>Profile Page</h1>
+	<ul>
+		<li><a class="active" href='guest.php'>Home</a></li>
+		<?php
+		session_start();
+		if($_SESSION['guest'] == false)
+		{
+			?>
+			
+			<li><a href='profile.php'>Profile</a></li>
+			<li><a href='logout.php'>Logout</a></li>
+			<li><a href='createStory.php'>Write Story</a></li>
+			<?php }?>
+		</ul>
 	<?php
 	require "database.php";
 	session_start();
@@ -60,8 +96,8 @@
 	echo "</ul>\n";
 
 	$stmt->close();
-/////////SHOWING LIKES/////////
-	echo "<br> Your liked stories: <br>";
+	//SHOWING SAVED STORIES
+	echo "<br> Your saved stories: <br>";
 	$stmt = $mysqli->prepare("select stories.story_id, likes.story_id, stories.story_link, stories.username, stories.title from stories join likes where likes.username='$user'");
 	if(!$stmt)
 	{

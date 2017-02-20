@@ -83,7 +83,7 @@
                 while($stmt->fetch()){
                     
                     echo $content;    
-                    $currentComment = $content;
+                    $currentComment = $mysqli->real_escape_string($content);
 
                 }
                 echo "</ul>\n";

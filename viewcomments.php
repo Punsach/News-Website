@@ -83,12 +83,9 @@
 	
 
 	while($stmt->fetch()){
-				// printf("\t<li>%s %s</li>\n",
-				// 	htmlspecialchars($first),
-				// 	htmlspecialchars($last)
-				// );
+			
 		echo "<a href='$story_link'>$title</a> ";
-		echo "Posted by " . $story_username . "<br>";
+		echo "Posted by " . $story_username . "<br>"."<br>";
 		
 
 	}
@@ -113,14 +110,11 @@
 	
 
 	while($stmt->fetch()){
-				// printf("\t<li>%s %s</li>\n",
-				// 	htmlspecialchars($first),
-				// 	htmlspecialchars($last)
-				// );
+				
 		
-		echo "Comment from " . $comment_username ."<br>" . $content ."<br>";
+		echo "Comment from " . $comment_username ."<br>" . $content ."<br>"."<br>";
 		if ($comment_username==$_SESSION['user_id']){
-					//if you're the author, give option to edit comment
+			//if you're the author, give option to edit comment
 			echo "<a href='editComments.php?comment_id=$comment_id'>Edit Your Comment  </a>";
 			echo "<a href='deleteComment.php?comment_id=$comment_id'>Delete</a>"."<br>" ;
 		}
@@ -131,6 +125,7 @@
 	$stmt->close();
 	?>
 	<?php
+	//Form for comments if you're logged in
 	if($_SESSION['guest'] !== true){
 		?>
 		<form method="POST">
@@ -148,16 +143,14 @@
 			session_start();
 
 			require "database.php";
-			$comment = $_POST['comment'];
+			$comment =  $mysqli->real_escape_string($_POST['comment']);
 			$username = $_SESSION['user_id'];
 
-			$stmt = $mysqli->prepare("insert into comments (story_id, username, content ) values ('$story_id','$username','$comment')");
+			$stmt = $mysqli->prepare("insert into comments (story_id, username, content) values ('$story_id','$username','$comment')");
 			if(!$stmt){
 				printf("Query Prep Failed: %s\n", $mysqli->error);
 				exit;
 			}
-	                    //echo mysql_error();
-	                    //$stmt->bind_param('sss', $username, $link, $title);
 
 			$stmt->execute();
 

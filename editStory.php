@@ -63,7 +63,7 @@
             <li><a href='logout.php'>Logout</a></li>
             <li><a href='createStory.php'>Write Story</a></li>
         </ul>
-                    <?php
+                    <?php }
                     require 'database.php';
                 $story_id = $_GET[story_id];
                 $stmt = $mysqli->prepare("select body from stories where story_id=$story_id");
@@ -103,7 +103,7 @@
                         <?php
                          if (isset($_POST['submitStory'])){
                         // session_start();
-                        $newBody = $_POST['story'];
+                        $newBody = $mysqli->real_escape_string($_POST['story']);
 
 
                         $stmt = $mysqli->prepare("UPDATE stories SET body='$newBody' where story_id=$story_id");

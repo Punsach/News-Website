@@ -87,18 +87,17 @@
 
                         require "database.php";
                         $link = $_POST['link'];
-                        $title = $_POST['title'];
-                        $body = $_POST['body'];
+                        $title = $mysqli->real_escape_string($_POST['title']);
+                        $body = $mysqli->real_escape_string($_POST['body']);
                         $username = $_SESSION['user_id'];
                        // echo $username . $link . $title;
 
-                        $stmt = $mysqli->prepare("insert into stories (username,story_link,body,title ) values ('$username', '$link','$body', '$title')");
+                        $stmt = $mysqli->prepare("insert into stories (username, story_link, body,title ) values ('$username', '$link','$body', '$title')");
                         if(!$stmt){
                             printf("Query Prep Failed: %s\n", $mysqli->error);
                             exit;
                         }
-                    //echo mysql_error();
-                    //$stmt->bind_param('sss', $username, $link, $title);
+                    
 
                         $stmt->execute();
 
