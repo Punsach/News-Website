@@ -2,7 +2,7 @@
             <html>
             <head>
              <meta charset="utf-8"/>
-             <title>File Sharing Site Login</title>
+             <title>Write a story</title>
              <style type="text/css">
                 h1{
                     color: black;
