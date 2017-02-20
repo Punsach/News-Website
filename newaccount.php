@@ -53,6 +53,7 @@
 		$stmt->execute();
 
 		$stmt->close();
+		header ("Location:login.php");
 	}
 
 	?>

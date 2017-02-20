@@ -52,7 +52,7 @@
 		
 		if($username === $user)
 		{
-			echo "<a href='$story_link'>$title</a> ";
+			echo "<a href='viewcomments.php?story_id=$story_id'>$title</a> ";
 			echo "<br>";
 		}
 
@@ -60,6 +60,34 @@
 	echo "</ul>\n";
 
 	$stmt->close();
+/////////SHOWING LIKES/////////
+	echo "<br> Your liked stories: <br>";
+	$stmt = $mysqli->prepare("select stories.story_id, likes.story_id, stories.story_link, stories.username, stories.title from stories join likes where likes.username='$user'");
+	if(!$stmt)
+	{
+		printf("Query Prep Failed: %s\n", $mysqli->error);
+		exit;
+	}
+
+	$stmt->execute();
+
+	$stmt->bind_result($story_id, $link_story_id, $story_link, $username, $title);
+
+	while($stmt->fetch())
+	{
+		
+		if($story_id===$link_story_id){
+			echo "<a href='viewcomments.php?story_id=$story_id'>$title</a> ";
+			echo "<br>";
+		}
+
+	}
+	echo "</ul>\n";
+
+	$stmt->close();
+
+
+
 	?>
 </div>
 </body>

@@ -5,30 +5,65 @@
                         <meta charset="utf-8"/>
                         <title>View Comments</title>
                         <style type="text/css">
-                                h1
-                            {
-                                color: black;
-                                text-align:center;
-                            }
-                            body
-                            {
-                                width: 760px; /* how wide to make your web page */
-                                background-color: teal; /* what color to make the background */
-                                margin: 0 auto;
-                                padding: 0;
-                                font:12px/16px Verdana, sans-serif; /* default font */
-                            }
-                            div#main
-                            {
-                                background-color: #FFF;
-                                margin: 0;
-                                padding: 10px;
-                            }
+                                ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: teal;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+        h1
+        {
+            color: black;
+            text-align:center;
+        }
+        body
+        {
+            width: 760px; /* how wide to make your web page */
+            background-color: teal; /* what color to make the background */
+            margin: 0 auto;
+            padding: 0;
+            font:12px/16px Verdana, sans-serif; /* default font */
+        }
+        div#main
+        {
+            background-color: white;
+            margin: 0;
+            padding: 10px;
+        }
                         </style>
                     </head>
                     
                     <body><div id = "main">
                     <h1>Edit Comment</h1>
+                    <ul>
+        <li><a class="active" href='guest.php'>Home</a></li>
+        <?php
+        session_start();
+        if($_SESSION['guest'] == false)
+        {
+            ?>
+            
+            <li><a href='profile.php'>Profile</a></li>
+            <li><a href='logout.php'>Logout</a></li>
+            <li><a href='createStory.php'>Write Story</a></li>
+        </ul>
                     <?php
                     require 'database.php';
                 $comment_id = $_GET[comment_id];

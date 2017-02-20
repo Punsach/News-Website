@@ -64,6 +64,7 @@
   <li><a href='createStory.php'>Write Story</a></li>
 	</ul>
 	<?php
+
 }
 	require 'database.php';
 
@@ -89,10 +90,14 @@
 			echo "Posted by " . $username . "<br>";
 			echo $body ."<br>";
 			if($username = $_SESSION['user_id']){
-				echo "<a href='editStory.php?story_id=$story_id'>Edit Your Story  </a>" . "<br>";
-				echo "<a href='deleteStory.php?story_id=$story_id'>Delete</a>"."<br>" ;
+				echo "<a href='editStory.php?story_id=$story_id'>Edit Your Story    </a>" . "<br>";
+				echo "<a href='deleteStory.php?story_id=$story_id'>Delete</a>   "."<br>" ;
 			}
 			echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";
+			if($_SESSION['guest'] == false)
+  {
+  		echo "<a href='likes.php?username=$username&story_id=$story_id'>Like</a>";
+  }
 
 		}
 		echo "</ul>\n";
