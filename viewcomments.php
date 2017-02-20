@@ -57,6 +57,7 @@
 		}
 		echo "</ul>\n";
 
+<<<<<<< HEAD
 		$stmt->close();
 		session_start();
 
@@ -76,14 +77,42 @@
 
 
 		while($stmt->fetch()){
+=======
+			$stmt = $mysqli->prepare("select comments.content, comments.username, comments.comment_id from comments where comments.story_id=$story_id");
+			if(!$stmt)
+			{
+				printf("Query Prep Failed: %s\n", $mysqli->error);
+				exit;
+			}
+			 
+			$stmt->execute();
+			 
+			$stmt->bind_result( $content, $comment_username, $comment_id);
+			 
+			echo "<ul>\n";
+			
+
+			while($stmt->fetch()){
+>>>>>>> 92d39d4e81753cacccc6e1be0f8035138be715d8
 				// printf("\t<li>%s %s</li>\n",
 				// 	htmlspecialchars($first),
 				// 	htmlspecialchars($last)
 				// );
 
+<<<<<<< HEAD
 			echo "Comment from " . $comment_username ."<br>" . $content ."<br>";
 			if ($comment_username==$_SESSION['user_id']){
 					//if you're the author, give option to edit comment
+=======
+					?>
+					<form method="POST" action = "editComments.php?comment_id='$comment_id'">
+                        <p>
+                            <input type="submit" name ="editComment" id = "editComment" value="Edit Your Comment" />
+                        </p>
+                    </form>
+                    <?php
+				}
+>>>>>>> 92d39d4e81753cacccc6e1be0f8035138be715d8
 
 				echo "YOURS" . "<br>";
 			}
