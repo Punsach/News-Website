@@ -44,18 +44,45 @@
                 $stmt->bind_result($content);
                  
                 echo "<ul>\n";
-                
 
                 while($stmt->fetch()){
                     
                     echo $content;    
+                    $currentComment = $content;
 
                 }
                 echo "</ul>\n";
                  
                 $stmt->close();
-                session_start();
+                //^That stuff all works, noli tangere
+                ?>
+                <form method="POST">
+                            <p>
+                                <label for="comment">Comment:</label>
+                                <input type="text" name="comment" id="comment" />
+                            </p>
+                            <p>
+                                <input type="submit" name ="submitComment" id = "submitComment" value="Edit Comment" />
+                            </p>
+                        </form>
 
+                        <?php
+                         if (isset($_POST['submitComment'])){
+                        // session_start();
+                        $newComment = $_POST['comment'];
+
+
+                        $stmt = $mysqli->prepare("UPDATE comments SET content='$newComment' where comment_id=$comment_id");
+                        if(!$stmt){
+                            printf("Query Prep Failed: %s\n", $mysqli->error);
+                            exit;
+                        }
+
+                        $stmt->execute();
+
+                        $stmt->close();
+                        header("Location: guest.php");
+                        }           
 
                
                 ?>
