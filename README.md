@@ -1,6 +1,6 @@
 # README #
 Module 3 Assignment CSE330
-Puneet Sachdeva & Kaitlyn Holzer
+Puneet Sachdeva (450921) & Kaitlyn Holzer (444905)
 
 Link to database:
 http://ec2-52-14-72-236.us-east-2.compute.amazonaws.com/phpmyadmin
