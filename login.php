@@ -13,7 +13,7 @@
         width: 600px;
         margin: 0 auto;
         padding: 25px;
-        background-color: green;
+        background-color: teal;
         border: 10px solid black;
         border-style: double;
     }
@@ -46,7 +46,9 @@
         </form>
 
         <?php 
-
+         session_start();
+        session_unset();
+        $_SESSION['guest'] = true; 
         require 'database.php';
         if(isset($_POST['guest']))
         {
@@ -58,15 +60,13 @@
         if(isset($_POST['loginButton']))
         {
 
-            session_start();
-            session_unset();
             $user = "";
 // Use a prepared statement
 
             $stmt = $mysqli->prepare("SELECT COUNT(*), username, password FROM users WHERE username=?");
 
 // Bind the parameter
-            $user = $_POST['user'];
+            $user = htmlentities($_POST['user']);
             
             $stmt->bind_param('s', $user);
             echo "WE DID SOMETHING";
@@ -76,7 +76,7 @@
             $stmt->bind_result($cnt, $username, $pwd_hash);
             $stmt->fetch();
 
-            $pwd_guess = $_POST['pass'];
+            $pwd_guess = htmlentities($_POST['pass']);
             
             if( password_verify($pwd_guess, $pwd_hash))
             {        
@@ -94,5 +94,3 @@
     </div>
 </body>
 </html>
-
-

@@ -1,9 +1,9 @@
             <!DOCTYPE html>
             <html>
             <head>
-             <meta charset="utf-8"/>
-             <title>File Sharing Site Login</title>
-             <style type="text/css">
+               <meta charset="utf-8"/>
+               <title>Add Article</title>
+               <style type="text/css">
                 h1{
                     color: black;
                     text-align:center;
@@ -13,15 +13,30 @@
                     width: 600px;
                     margin: 0 auto;
                     padding: 25px;
-                    background-color: green;
+                    background-color: teal;
                     border: 10px solid black;
                     border-style: double;
                 }
             </style>
-            </head>
-            <body>
-                <div class = "box">
-                    <h1>LOGIN</h1>
+        </head>
+        <body>
+            <div class = "box">
+                <?php 
+                if($_SESSION['guest'] == true)
+                {
+                    ?>
+                    <h1>Please make an account if you would like to post a story!</h1>
+
+                    <form method="POST" action = "newaccount.php">
+                        <p>
+                            <input type="submit" name ="makeaccount" id = "makeaccount" value="Make Account" />
+                        </p>
+                    </form>
+                    <?php
+                }
+                else
+                {
+                    ?>
                     <form method="POST">
                         <p>
                             <label for="title">Enter your title:</label>
@@ -37,28 +52,33 @@
                     </form>
 
                     <?php
-                    if (isset($_POST['submitStory'])){
-                    session_start();
+                    if (isset($_POST['submitStory']))
+                    {
+                        session_start();
 
-                    require "database.php";
-                    $link = $_POST['link'];
-                    $title = $_POST['title'];
-                    $username = $_SESSION['user_id'];
-                    echo $username . $link . $title;
+                        require "database.php";
+                        $link = htmlentities($_POST['link']);
+                        $title = htmlentities($_POST['title']);
+                        $username = $_SESSION['user_id'];
+                        echo $username . $link . $title;
 
-                    $stmt = $mysqli->prepare("insert into stories (username,story_link,title ) values ('$username', '$link','$title')");
-                    if(!$stmt){
-                        printf("Query Prep Failed: %s\n", $mysqli->error);
-                        exit;
-                    }
+                        $stmt = $mysqli->prepare("insert into stories (username,story_link,title ) values ('$username', '$link','$title')");
+                        if(!$stmt)
+                        {
+                            printf("Query Prep Failed: %s\n", $mysqli->error);
+                            exit;
+                        }
                     //echo mysql_error();
                     //$stmt->bind_param('sss', $username, $link, $title);
 
-                    $stmt->execute();
+                        $stmt->execute();
 
-                    $stmt->close();
+                        $stmt->close();
+                        header("Location: guest.php")
+                    }
                 }
-                    ?>
-                    </div>
-                </body>
-            </html>
+
+                ?>
+            </div>
+        </body>
+        </html>
