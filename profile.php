@@ -49,8 +49,8 @@
 
 	while($stmt->fetch())
 	{
-		echo "Posted by " . $username . "<br>";
-		if($username == $user)
+		
+		if($username === $user)
 		{
 			echo "<a href='$story_link'>$title</a> ";
 			echo "<br>";
