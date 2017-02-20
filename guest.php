@@ -67,7 +67,7 @@
 }
 	require 'database.php';
 
-	$stmt = $mysqli->prepare("select story_id, story_link, username, title from stories order by story_id");
+	$stmt = $mysqli->prepare("select story_id, story_link, body, username, title from stories order by story_id");
 	if(!$stmt)
 	{
 		printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -76,7 +76,7 @@
 
 	$stmt->execute();
 
-	$stmt->bind_result($story_id, $story_link, $username, $title);
+	$stmt->bind_result($story_id, $story_link, $body, $username, $title);
 
 	echo "<ul>\n";
 		while($stmt->fetch()){
@@ -87,7 +87,9 @@
 			
 			echo "<a href='$story_link'>$title</a> ";
 			echo "Posted by " . $username . "<br>";
+			echo $body ."<br>";
 			if($username = $_SESSION['user_id']){
+				echo "<a href='editStory.php?story_id=$story_id'>Edit Your Story  </a>" . "<br>";
 				echo "<a href='deleteStory.php?story_id=$story_id'>Delete</a>"."<br>" ;
 			}
 			echo "<a href='viewcomments.php?story_id=$story_id'>Comments</a>" . "<br>";

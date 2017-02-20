@@ -21,63 +21,63 @@
         </head>
         <body>
             <div class = "box">
-                <?php 
-                if($_SESSION['guest'] == true)
-                {
-                    ?>
-                    <h1>Please make an account if you would like to post a story!</h1>
-
-                    <form method="POST" action = "newaccount.php">
-                        <p>
-                            <input type="submit" name ="makeaccount" id = "makeaccount" value="Make Account" />
-                        </p>
-                    </form>
+                <h1>Edit Story</h1>
                     <?php
+                    require 'database.php';
+                $story_id = $_GET[story_id];
+                $stmt = $mysqli->prepare("select body from stories where story_id=$story_id");
+                if(!$stmt)
+                {
+                    printf("Query Prep Failed: %s\n", $mysqli->error);
+                    exit;
                 }
-                else
-                {
-                    ?>
-                    <form method="POST">
-                        <p>
-                            <label for="title">Enter your title:</label>
-                            <input type="text" name="title" id="title" />
-                        </p>
-                        <p> 
-                            <label for="link">Enter your link (Please include full link, including "https://":</label>
-                            <input type="text" name="link" id="link"/>
-                        </p>
-                        <p>
-                            <input type="submit" name ="submitStory" id = "submitStory" value="Submit Story" />
-                        </p>
-                    </form>
+                 
+                $stmt->execute();
+                 
+                $stmt->bind_result($body);
+                 
+                echo "<ul>\n";
 
-                    <?php
-                    if (isset($_POST['submitStory']))
-                    {
-                        session_start();
+                while($stmt->fetch()){
+                    
+                    echo $body;    
+                    $currentBody = $body;
 
-                        require "database.php";
-                        $link = htmlentities($_POST['link']);
-                        $title = htmlentities($_POST['title']);
-                        $username = $_SESSION['user_id'];
-                        echo $username . $link . $title;
+                }
+                echo "</ul>\n";
+                 
+                $stmt->close();
+                //^That stuff all works, noli tangere
+                ?>
+                <form method="POST">
+                            <p>
+                                <label for="story">Story:</label>
+                                <input type="text" name="story" id="story" />
+                            </p>
+                            <p>
+                                <input type="submit" name ="submitStory" id = "submitStory" value="Edit Story" />
+                            </p>
+                        </form>
 
-                        $stmt = $mysqli->prepare("insert into stories (username,story_link,title ) values ('$username', '$link','$title')");
-                        if(!$stmt)
-                        {
+                        <?php
+                         if (isset($_POST['submitStory'])){
+                        // session_start();
+                        $newBody = $_POST['story'];
+
+
+                        $stmt = $mysqli->prepare("UPDATE stories SET body='$newBody' where story_id=$story_id");
+                        if(!$stmt){
                             printf("Query Prep Failed: %s\n", $mysqli->error);
                             exit;
                         }
-                    //echo mysql_error();
-                    //$stmt->bind_param('sss', $username, $link, $title);
 
                         $stmt->execute();
 
                         $stmt->close();
-                        header("Location: guest.php")
-                    }
-                }
+                        header("Location: guest.php");
+                        }           
 
+               
                 ?>
             </div>
         </body>

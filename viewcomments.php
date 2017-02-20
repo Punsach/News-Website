@@ -31,7 +31,7 @@
 			    <?php
 			    require 'database.php';
 			$story_id = $_GET[story_id];
-			$stmt = $mysqli->prepare("select story_link, stories.username, title from stories where story_id=$story_id");
+			$stmt = $mysqli->prepare("select story_link, stories.username, stories.body, title from stories where story_id=$story_id");
 			if(!$stmt)
 			{
 				printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -40,7 +40,7 @@
 			 
 			$stmt->execute();
 			 
-			$stmt->bind_result($story_link, $story_username, $title);
+			$stmt->bind_result($story_link, $story_username, $body, $title);
 			 
 			echo "<ul>\n";
 			
@@ -52,7 +52,7 @@
 				// );
 				echo "<a href='$story_link'>$title</a> ";
 				echo "Posted by " . $story_username . "<br>";
-				
+				echo $body ."<br>";
 
 			}
 			echo "</ul>\n";
