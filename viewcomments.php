@@ -84,8 +84,8 @@
 				echo "Comment from " . $comment_username ."<br>" . $content ."<br>";
 				if ($comment_username==$_SESSION['user_id']){
 					//if you're the author, give option to edit comment
-					echo "<a href='editComments.php?comment_id=$comment_id'>Edit Your Comment</a>";
-					echo "<a href='deleteComment.php?comment_id=$comment_id'>Delete Your Comment</a>"."<br>" ";
+					echo "<a href='editComments.php?comment_id=$comment_id'>Edit Your Comment  </a>";
+					echo "<a href='deleteComment.php?comment_id=$comment_id'>Delete</a>"."<br>" ;
 				}
 
 			}
