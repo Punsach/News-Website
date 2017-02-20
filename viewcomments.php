@@ -30,7 +30,7 @@
 			    <h1>Comments</h1>
 			    <?php
 			    require 'database.php';
-			$story_id = $_GET[story_id];
+			$story_id = $_GET['story_id'];
 			$stmt = $mysqli->prepare("select story_link, stories.username, title from stories where story_id=$story_id");
 			if(!$stmt)
 			{
@@ -85,13 +85,18 @@
 				if ($comment_username==$_SESSION['user_id']){
 					//if you're the author, give option to edit comment
 
-					?>
-					<form method="POST" action = "editComments.php?comment_id='$comment_id'">
-                        <p>
-                            <input type="submit" name ="editComment" id = "editComment" value="Edit Your Comment" />
-                        </p>
-                    </form>
-                    <?php
+					
+					echo "<a href='editComments.php?comment_id=$comment_id'>Edit Your Comment</a> "."<br>";
+					// <!-- <form method="POST">
+     //                    <p>
+     //                        <input type="submit" name ="editComment" id = "editComment" value="Edit Your Comment" />
+     //                    </p>
+     //                </form> -->
+                    
+
+				}
+				if (isset($_POST['editComment'])){
+					 header("Location: editComments.php?comment_id=" . $comment_id);
 				}
 
 			}

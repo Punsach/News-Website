@@ -2,7 +2,7 @@
             <html>
             <head>
              <meta charset="utf-8"/>
-             <title>File Sharing Site Login</title>
+             <title>Edit Comment</title>
              <style type="text/css">
                 h1{
                     color: black;
@@ -21,8 +21,24 @@
             </head>
             <body>
                 <div class = "box">
-                    <h1>LOGIN</h1>
-                    <form method="POST">
+                    <h1>Edit Comment</h1>
+                    <?php
+                    require 'database.php';
+                    $comment_id = $_GET['comment_id'];
+                   
+                    
+                    $stmt = $mysqli->prepare("select content from comments WHERE comment_id=$comment_id");
+
+                    if(!$stmt){
+                        printf("Query Prep Failed: %s\n", $mysqli->error);
+                        exit;
+                    }
+
+                    ?>
+                    
+
+
+                   <!--  <form method="POST">
                         <p>
                             <label for="content">Edit comment to:</label>
                             <input type="text" name="content" id="content" />
@@ -30,11 +46,11 @@
                         <p>
                             <input type="submit" name ="submitComment" id = "submitComment" value="Edit Comment" />
                         </p>
-                    </form>
+                    </form> -->
 
                     <?php
                     if (isset($_POST['submitComment'])){
-                    session_start();
+                   
 
                     require "database.php";
                     $content = $_POST['content'];
@@ -46,10 +62,15 @@
                         printf("Query Prep Failed: %s\n", $mysqli->error);
                         exit;
                     }
-                    //echo mysql_error();
-                    //$stmt->bind_param('sss', $username, $link, $title);
-
+                    
                     $stmt->execute();
+             
+                    $stmt->bind_result( $content);
+
+                    while($stmt->fetch()){
+                        echo "Edit comment:" . "<br>";
+                        echo $content;
+                    }
 
                     $stmt->close();
                 }
