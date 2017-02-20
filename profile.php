@@ -54,6 +54,7 @@
 	<ul>
 		<li><a class="active" href='guest.php'>Home</a></li>
 		<?php
+		//This page is the users profile page. It prints out all of the users posted pages, and it prints out all of the pages the user has saved. 
 		session_start();
 		if($_SESSION['guest'] == false)
 		{

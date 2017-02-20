@@ -54,6 +54,7 @@
 	<ul>
 		<li><a class="active" href='guest.php'>Home</a></li>
 		<?php
+		//Only allows the guest user the option to visit the home page 
 		session_start();
 		if($_SESSION['guest'] == false)
 		{
@@ -74,14 +75,15 @@
 		printf("Query Prep Failed: %s\n", $mysqli->error);
 		exit;
 	}
-
+	$currentUser = $_SESSION['user_id'];
+	//Prints out all of the stories, their author, and gives the option to view the comments 
 	$stmt->execute();
 
 	$stmt->bind_result($story_id, $story_link, $body, $username, $title);
 
 	echo "<ul>\n";
 	while($stmt->fetch()){
-
+		
 			//show story & info
 		echo "<a href='$story_link'>$title</a> ";
 		echo "Posted by " . $username . "<br>";
@@ -98,7 +100,7 @@
 		if($_SESSION['guest'] == false)
 		{
   		//allow logged in users to like a story
-			echo "<a href='likes.php?username=$username&story_id=$story_id'>Save Story</a> <br><br>";
+			echo "<a href='likes.php?username=$currentUser&story_id=$story_id'>Save Story</a> <br><br>";
 
 		}
 

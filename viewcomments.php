@@ -50,10 +50,12 @@
 </head>
 
 <body><div id = "main">
+
 	<h1>Comments</h1>
 	<ul>
 		<li><a class="active" href='guest.php'>Home</a></li>
 		<?php
+		//Generates all the comments, indicates which comments are yours by allowing you to edit them, and allows you to submit comments if you are the logged in user. 
 		session_start();
 		if($_SESSION['guest'] == false)
 		{
@@ -81,9 +83,9 @@
 	
 	echo "<ul>\n";
 	
-
+//Links to the story 
 	while($stmt->fetch()){
-			
+
 		echo "<a href='$story_link'>$title</a> ";
 		echo "Posted by " . $story_username . "<br>"."<br>";
 		
@@ -107,10 +109,10 @@
 	$stmt->bind_result( $content, $comment_username, $comment_id);
 	
 	echo "<ul>\n";
-	
+	//Allows corresponding user to edit and delete their stuff 
 
 	while($stmt->fetch()){
-				
+
 		
 		echo "Comment from " . $comment_username ."<br>" . $content ."<br>"."<br>";
 		if ($comment_username==$_SESSION['user_id']){
@@ -133,6 +135,7 @@
 				<label for="comment">Comment:</label>
 				<input type="text" name="comment" id="comment" />
 			</p>
+			<input type="hidden" name ="token" value = "<?php echo $_SESSION['token'];?>" />
 			<p>
 				<input type="submit" name ="submitComment" id = "submitComment" value="Submit Comment" />
 			</p>
@@ -141,7 +144,9 @@
 		<?php
 		if (isset($_POST['submitComment'])){
 			session_start();
-
+			if(!hash_equals($_SESSION['token'], $_POST['token'])){
+				die("Request forgery detected");
+			}
 			require "database.php";
 			$comment =  $mysqli->real_escape_string($_POST['comment']);
 			$username = $_SESSION['user_id'];

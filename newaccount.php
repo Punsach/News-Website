@@ -30,13 +30,13 @@
 			<input type="password" name="pass" id="pass"/>
 		</p>
 		<p>
-			<input type="submit" name ="newacc" id = "newacc" value="Create Account" />
+			<input type="submit" name ="new" id = "new" value="Create Account" />
 		</p>
 	</form>
 	<?php
 	require 'database.php';
-
-	if(isset($_POST['newacc']))
+	//Allows user to create an account and hashes the password, then stores it in table
+	if(isset($_POST['new']))
 	{
 		$username = $_POST['user'];
 		$password = $_POST['pass'];

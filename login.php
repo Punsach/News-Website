@@ -48,6 +48,7 @@
         <?php 
          session_start();
         session_unset();
+       
         $_SESSION['guest'] = true; 
         require 'database.php';
         if(isset($_POST['guest']))
@@ -77,11 +78,12 @@
             $stmt->fetch();
 
             $pwd_guess = htmlentities($_POST['pass']);
-            
+            //Verify password and set up token
             if( password_verify($pwd_guess, $pwd_hash))
             {        
                 $_SESSION['user_id'] = $username;
                 $_SESSION['guest'] = false; 
+                $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32)); 
                 header("Location: guest.php");
             } 
             else

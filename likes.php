@@ -1,4 +1,5 @@
 <?php 
+//Fills the likes table with the saved articles for a user and their username. 
 	$currentUser = $_GET['username'];
 	$storyID = $_GET['story_id'];
 require "database.php";
